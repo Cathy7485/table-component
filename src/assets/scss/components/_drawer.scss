@@ -1,0 +1,25 @@
+.p-drawer-full {
+  .custom-drawer {
+    border: none !important;
+    background: rgb(233, 239, 245);
+
+    &.p-component {
+      padding: 1rem;
+      width: 95vw !important;
+      height: 95vh !important;
+      border-radius: 0.5rem;
+    }
+
+    .p-drawer-content {
+      padding: 0.5rem !important;
+      display: flex;
+      flex-direction: column;
+      gap: 1.125rem;
+    }
+  }
+}
+
+.p-overlay-mask {
+  background: rgba(0, 0, 0, 0.4) !important;
+  z-index: 5 !important;
+}

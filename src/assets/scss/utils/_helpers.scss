@@ -1,0 +1,139 @@
+@use "@/assets/scss/base/grid" as *;
+@use "sass:math";
+
+// px轉乘rem
+@function rem($px, $base: 16) {
+  // 用 math.div 來做 Sass 的數字運算
+  @return math.div($px, $base) * 1rem;
+}
+
+hr {
+  color: rgba(77, 84, 81, 0.2);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+
+  @include desktop {
+    margin: 1rem 0;
+  }
+}
+
+.text-end {
+  text-align: end;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.gap-3 {
+  gap: 1rem;
+}
+
+.justify-content-around {
+  justify-content: space-around;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.ms-auto {
+  margin-left: auto;
+}
+
+.ms-3 {
+  margin-left: 1rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.word-nowrap {
+  word-break: keep-all;
+}
+
+.fz-12 {
+  font-size: 0.75rem;
+}
+
+.text-gray {
+  color: #7e7e7e;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: normal;
+}
+
+.fw-bold {
+  font-weight: 600;
+}
+
+.selector {
+  display: block;
+  width: 22.5rem;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: normal;
+
+  @include wide-lg {
+    width: 12.5rem;
+  }
+}
+
+.vedio-box {
+  width: 100%;
+  height: 100%;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+}
+
+.required-label::before {
+  content: "*";
+  color: rgba(255, 65, 65, 1);
+  margin-right: 0px;
+}
+
+.leader-line {
+  @include wide {
+    display: none;
+  }
+}
+
+.loading-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  z-index: 2;
+
+  span {
+    margin-top: 24px;
+  }
+}

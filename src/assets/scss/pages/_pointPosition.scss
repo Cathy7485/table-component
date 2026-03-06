@@ -1,0 +1,1504 @@
+@use "@/assets/scss/base/grid" as *;
+
+.device-component {
+  .point-wide-initial {
+    @include wide {
+      position: relative !important;
+      top: initial !important;
+      left: initial !important;
+      right: initial !important;
+      bottom: initial !important;
+    }
+  }
+}
+
+.map-point {
+  font-size: 0.875rem;
+  transition: all 0.3s;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: inset 0 0 0 1px rgb(238, 127, 29);
+  }
+
+  &.active {
+    font-size: 0.8125rem;
+    padding: 0.125rem;
+    border-radius: 0.125rem;
+    background: rgba(238, 127, 29, 1);
+    color: #fff;
+  }
+}
+
+// 只有水系統point-item會用到
+.water-point {
+  color: transparent;
+}
+
+/* 
+  空調水系統 air_water_map
+  命名方式： point-${point.point_num}
+*/
+
+// CDA一樓空壓機電流
+#point-52 {
+  position: absolute;
+  top: -8.5%;
+  left: 28%;
+}
+
+// CWST-冷卻水出水溫度
+#point-70 {
+  position: absolute;
+  top: 12%;
+  left: 38%;
+}
+
+// CWRT-冷卻水回水溫度
+#point-71 {
+  position: absolute;
+  top: 39%;
+  left: 3.3%;
+}
+
+// CHRT-回水溫度
+#point-87 {
+  position: absolute;
+  top: 93%;
+  left: 75%;
+}
+
+// CHST-出水溫度
+#point-88 {
+  position: absolute;
+  top: 64%;
+  left: 88.5%;
+}
+
+// CHDPCV-旁通閥控制
+#point-99 {
+  position: absolute;
+  top: 65%;
+  left: 74%;
+}
+
+// KWHX空調總用電量
+#point-235 {
+  position: absolute;
+  top: -8.5%;
+  left: 61%;
+}
+
+// 冷卻水溫度設定
+#point-236 {
+  position: absolute;
+  top: 49%;
+  left: 3.5%;
+}
+
+// 壓差設定
+#point-239 {
+  position: absolute;
+  top: 74.5%;
+  left: 80%;
+}
+
+// 冰水壓差
+#point-240 {
+  position: absolute;
+  top: 74.5%;
+  left: 86.8%;
+}
+
+// CT31冷卻水塔-開關
+#point-53 {
+  position: absolute;
+  top: 15%;
+  left: 27%;
+  max-width: 4rem;
+}
+
+// CT31冷卻水塔-狀況
+#point-54 {
+  position: absolute;
+  top: 24.5%;
+  left: 17.5%;
+  max-width: 4rem;
+}
+
+// CT31冷卻水塔-跳脫
+#point-55 {
+  position: absolute;
+  top: 24.5%;
+  left: 27%;
+  max-width: 4rem;
+}
+
+// CT31冷卻水塔-變頻控制
+#point-56 {
+  position: absolute;
+  top: 5%;
+  left: 26.7%;
+  max-width: 6rem;
+}
+
+// CT32冷卻水塔-開關
+#point-57 {
+  position: absolute;
+  top: 14%;
+  left: 0;
+  max-width: 5rem;
+}
+
+// CT32冷卻水塔-狀況
+#point-58 {
+  position: absolute;
+  top: 24.5%;
+  left: 11.2%;
+  max-width: 4rem;
+}
+
+// CT32冷卻水塔-跳脫
+#point-59 {
+  position: absolute;
+  top: 23%;
+  left: 0;
+  max-width: 6rem;
+}
+
+// CT32冷卻水塔-變頻控制
+#point-60 {
+  position: absolute;
+  top: 5%;
+  left: 0;
+  max-width: 6rem;
+}
+
+// CWP1冷卻泵-開關
+#point-61 {
+  position: absolute;
+  top: 44.5%;
+  left: 20%;
+}
+
+// CWP1冷卻泵-狀況
+#point-62 {
+  position: absolute;
+  top: 52%;
+  left: 14.5%;
+  max-width: 4rem;
+}
+
+// CWP1冷卻泵-跳脫
+#point-63 {
+  position: absolute;
+  top: 50%;
+  left: 20%;
+}
+
+// CWP2冷卻泵-開關
+#point-64 {
+  position: absolute;
+  top: 83%;
+  left: 20%;
+}
+
+// CWP2冷卻泵-狀況
+#point-65 {
+  position: absolute;
+  top: 91%;
+  left: 14.5%;
+  max-width: 4rem;
+}
+
+// CWP2冷卻泵-跳脫
+#point-66 {
+  position: absolute;
+  top: 88%;
+  left: 20%;
+}
+
+// CWPS冷卻泵-開關
+#point-67 {
+  position: absolute;
+  top: 63%;
+  left: 20%;
+}
+
+// CWPS冷卻泵-狀況
+#point-68 {
+  position: absolute;
+  top: 70%;
+  left: 14.5%;
+  max-width: 4rem;
+}
+
+// CWPS冷卻泵-跳脫
+#point-69 {
+  position: absolute;
+  top: 69%;
+  left: 20%;
+}
+
+// CH1-開關
+#point-72 {
+  position: absolute;
+  top: 30%;
+  left: 48.5%;
+}
+
+// CH1-狀況
+#point-73 {
+  position: absolute;
+  top: 25%;
+  left: 39%;
+}
+
+// CH1-跳脫
+#point-74 {
+  position: absolute;
+  top: 35%;
+  left: 48.5%;
+}
+
+// CH1連鎖啟動
+#point-237 {
+  position: absolute;
+  top: 48.5%;
+  left: 40%;
+  width: 7rem;
+}
+
+// CH2-開關
+#point-75 {
+  position: absolute;
+  top: 70%;
+  left: 48.5%;
+}
+
+// CH2-狀況
+#point-76 {
+  position: absolute;
+  top: 64%;
+  left: 39%;
+}
+
+// CH2-跳脫
+#point-77 {
+  position: absolute;
+  top: 75%;
+  left: 48.5%;
+}
+
+// CH2連鎖啟動
+#point-238 {
+  position: absolute;
+  top: 87.5%;
+  left: 40%;
+  width: 7rem;
+}
+
+// CHP1-開關
+#point-78 {
+  position: absolute;
+  top: 60%;
+  left: 60%;
+}
+
+// CHP1-狀況
+#point-79 {
+  position: absolute;
+  top: 55%;
+  left: 63%;
+}
+
+// CHP1-跳脫
+#point-80 {
+  position: absolute;
+  top: 60%;
+  left: 66.2%;
+}
+
+// CHP2-開關
+#point-81 {
+  position: absolute;
+  top: 99%;
+  left: 60%;
+}
+
+// CHP2-狀況
+#point-82 {
+  position: absolute;
+  top: 94%;
+  left: 63%;
+}
+
+// CHP2-跳脫
+#point-83 {
+  position: absolute;
+  top: 99%;
+  left: 66.5%;
+}
+
+// CHPS-開關
+#point-84 {
+  position: absolute;
+  top: 79%;
+  left: 60%;
+}
+
+// CHPS-狀況
+#point-85 {
+  position: absolute;
+  top: 74%;
+  left: 63%;
+}
+
+// CHPS-跳脫
+#point-86 {
+  position: absolute;
+  top: 79%;
+  left: 66.5%;
+}
+
+// 區域泵1號啟停
+#point-89 {
+  position: absolute;
+  top: 17.5%;
+  left: 85.5%;
+  max-width: 4rem;
+}
+
+// ZP1-狀況
+#point-90 {
+  position: absolute;
+  top: 21%;
+  left: 91.5%;
+}
+
+// ZP1-跳脫
+#point-91 {
+  position: absolute;
+  top: 27.5%;
+  left: 85.5%;
+}
+
+// ZP1-變頻控制
+#point-92 {
+  position: absolute;
+  top: 25.5%;
+  left: 91.5%;
+}
+
+// ZP1-變頻器跳脫
+#point-93 {
+  position: absolute;
+  top: 30.5%;
+  left: 91.5%;
+}
+
+// 區域泵2號啟停
+#point-94 {
+  position: absolute;
+  top: 43%;
+  left: 85.5%;
+  max-width: 4rem;
+}
+
+// ZP2-狀況
+#point-95 {
+  position: absolute;
+  top: 47%;
+  left: 91.5%;
+}
+
+// ZP2-跳脫
+#point-96 {
+  position: absolute;
+  top: 52%;
+  left: 86%;
+}
+
+// ZP2-變頻控制
+#point-97 {
+  position: absolute;
+  top: 52%;
+  left: 91.5%;
+}
+
+// ZP2-變頻器跳脫
+#point-98 {
+  position: absolute;
+  top: 57%;
+  left: 91%;
+}
+
+// 冷卻水塔降載溫度
+#point-298 {
+  position: absolute;
+  top: 33.5%;
+  left: 0%;
+}
+
+// 冷卻水塔單台降載溫度
+#point-301 {
+  position: absolute;
+  top: 33.5%;
+  left: 11.5%;
+}
+
+// 冷卻水塔複載溫度
+#point-302 {
+  position: absolute;
+  top: 33.5%;
+  left: 24%;
+}
+
+// 冷卻水塔最低負載
+#point-300 {
+  position: absolute;
+  top: 5%;
+  left: 13%;
+}
+
+/* 
+  無塵室水系統 ice_water_map
+  命名方式： point-${point.point_num}
+*/
+// ACH301開/關
+#point-130 {
+  position: absolute;
+  top: 13.5%;
+  left: 57%;
+}
+
+// ACH301狀況
+#point-131 {
+  position: absolute;
+  top: 8%;
+  left: 53.5%;
+}
+
+// ACH301跳脫
+#point-132 {
+  position: absolute;
+  top: 13.5%;
+  left: 65%;
+}
+
+// ACH301出水溫度
+#point-133 {
+  position: absolute;
+  top: 5%;
+  left: 72.5%;
+}
+
+// ACH302開/關
+#point-134 {
+  position: absolute;
+  top: 45%;
+  left: 59%;
+  max-width: 4rem;
+}
+
+// ACH302狀況
+#point-135 {
+  position: absolute;
+  top: 34%;
+  left: 53.5%;
+}
+
+// ACH302跳脫
+#point-136 {
+  position: absolute;
+  top: 48%;
+  left: 65%;
+}
+
+// ACH302出水溫度
+#point-137 {
+  position: absolute;
+  top: 30%;
+  left: 71%;
+}
+
+// ACHSYS冰水混合回水溫度
+#point-138 {
+  position: absolute;
+  top: 41%;
+  left: 47%;
+  max-width: 8.7rem;
+}
+
+// ACHSYS冰水總出水溫度
+#point-139 {
+  position: absolute;
+  top: 31%;
+  left: 2%;
+}
+
+// 系統連鎖啟動
+#point-259 {
+  position: absolute;
+  top: 2%;
+  left: 2%;
+}
+
+// ACH301連鎖啟動
+#point-260 {
+  position: absolute;
+  top: 18%;
+  left: 60%;
+}
+
+// ACH302連鎖啟動
+#point-261 {
+  position: absolute;
+  top: 29%;
+  left: 60%;
+}
+
+// 熱泵主機連鎖啟動
+#point-262 {
+  position: absolute;
+  top: 70%;
+  left: 53%;
+}
+
+// ACKW無塵室用電量
+#point-266 {
+  position: absolute;
+  top: 8%;
+  left: 2%;
+}
+
+// CCP301開/關
+#point-140 {
+  position: absolute;
+  top: 8%;
+  left: 38.2%;
+}
+
+// CCP301狀況
+#point-141 {
+  position: absolute;
+  top: 13%;
+  left: 31.5%;
+}
+
+// CCP301跳脫
+#point-142 {
+  position: absolute;
+  top: 13%;
+  left: 38.5%;
+}
+
+// CCP303開/關
+#point-143 {
+  position: absolute;
+  top: 41%;
+  left: 39.5%;
+}
+
+// CCP303狀況
+#point-144 {
+  position: absolute;
+  top: 46%;
+  left: 31.5%;
+}
+
+// CCP303跳脫
+#point-145 {
+  position: absolute;
+  top: 45.2%;
+  left: 39.5%;
+  max-width: 3.5rem;
+}
+
+// HCH301熱泵主機開/關
+#point-146 {
+  position: absolute;
+  top: 75%;
+  left: 42%;
+}
+
+// HCH301熱泵主機狀況
+#point-147 {
+  position: absolute;
+  top: 60%;
+  left: 53%;
+}
+
+// HCH301熱泵主機跳脫
+#point-148 {
+  position: absolute;
+  top: 65%;
+  left: 53%;
+}
+
+// HCH301熱水回水溫度
+#point-149 {
+  position: absolute;
+  top: 90%;
+  left: 17%;
+}
+
+// HCH301熱水出水溫度
+#point-150 {
+  position: absolute;
+  top: 57%;
+  left: 30%;
+}
+
+// HCP301開/關
+#point-151 {
+  position: absolute;
+  top: 85%;
+  left: 39%;
+}
+
+// HCP301狀況
+#point-152 {
+  position: absolute;
+  top: 90%;
+  left: 31%;
+}
+
+// HCP301跳脫
+#point-153 {
+  position: absolute;
+  top: 90%;
+  left: 39%;
+}
+
+// -------------------------------------
+/* 
+  無塵室水系統 ice_water
+  命名方式： ice-water-${device.device_num}
+*/
+
+//ACH-301
+#ice-water-38 {
+  .point-name {
+    position: absolute;
+    top: 7.2%;
+    left: 76%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    top: 11%;
+    left: 59.5%;
+    z-index: 1;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    top: -1.6%;
+    left: 63.3%;
+    transform: scale(0.87);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    top: 11.5%;
+    left: 64%;
+  }
+
+  // 出水溫度
+  #point-4 {
+    position: absolute;
+    top: 6.5%;
+    left: 74%;
+    justify-content: flex-end;
+  }
+}
+
+//ACH-302
+#ice-water-39 {
+  .point-name {
+    position: absolute;
+    top: 28.7%;
+    left: 76.2%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    top: 26%;
+    left: 59.8%;
+    z-index: 1;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    top: 29%;
+    left: 63.3%;
+    transform: scale(0.87);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    top: 26.5%;
+    left: 65%;
+  }
+
+  // 出水溫度
+  #point-4 {
+    position: absolute;
+    top: 28%;
+    left: 74.2%;
+    justify-content: flex-end;
+  }
+}
+
+//CCP-1
+#ice-water-40 {
+  .point-name {
+    position: absolute;
+    top: 12%;
+    left: 37.5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    top: 7%;
+    left: 42%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    top: 6.4%;
+    left: 35.95%;
+    transform: scale(0.87);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    top: 13%;
+    left: 42.1%;
+  }
+}
+
+//CCP-3
+#ice-water-41 {
+  .point-name {
+    position: absolute;
+    top: 43%;
+    left: 37.5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    top: 37%;
+    left: 42.1%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    top: 37.1%;
+    left: 35.9%;
+    transform: scale(0.87);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    top: 42.5%;
+    left: 42.1%;
+  }
+}
+
+//熱泵主機
+#ice-water-42 {
+  .point-name {
+    position: absolute;
+    top: 73.5%;
+    left: 42.6%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    top: 72.5%;
+    left: 47%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    top: 55.7%;
+    left: 44.95%;
+    transform: scale(0.95);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    top: 62.5%;
+    left: 55.5%;
+    max-width: 10.2rem;
+  }
+
+  // 熱水回水溫度
+  #point-4 {
+    position: absolute;
+    top: 84%;
+    left: 19%;
+    justify-content: flex-end;
+  }
+
+  // 熱水出水溫度
+  #point-5 {
+    position: absolute;
+    top: 57.5%;
+    left: 25%;
+    justify-content: flex-end;
+    max-width: 5.5rem;
+  }
+}
+
+//HCP-301
+#ice-water-43 {
+  .point-name {
+    position: absolute;
+    top: 87.5%;
+    left: 35.5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    top: 82%;
+    left: 40.2%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    top: 81.8%;
+    left: 34.2%;
+    transform: scale(0.87);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    top: 57.5%;
+    left: 55.5%;
+  }
+}
+
+// 其他
+#ice-water-46 {
+  .point-name {
+    position: absolute;
+    bottom: 6%;
+    left: 30%;
+  }
+
+  @include wide {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  //冰水混合回水溫度
+  #point-1 {
+    position: absolute;
+    top: 72%;
+    left: 8.5%;
+    max-width: 6rem;
+  }
+
+  //ACH-SYS-冰水總出水溫度
+  #point-2 {
+    position: absolute;
+    top: 31.3%;
+    left: 8.5%;
+    max-width: 6rem;
+  }
+
+  //ACH301連鎖啟動
+  #point-3 {
+    position: absolute;
+    top: 16%;
+    left: 61.5%;
+    max-width: none;
+  }
+
+  //ACH302連鎖啟動
+  #point-4 {
+    position: absolute;
+    top: 21%;
+    left: 61.5%;
+    max-width: none;
+  }
+
+  // 熱泵
+  #point-5 {
+    position: absolute;
+    top: 72%;
+    left: 52%;
+    max-width: none;
+  }
+}
+
+#ice-water-0 {
+  display: none;
+}
+// -------------------------------------
+/* 
+  空調水系統 air_water
+  命名方式： air_water-${device.device_num}
+*/
+
+//CT-31
+#air-water-24 {
+  .point-name {
+    position: absolute;
+    left: 20%;
+    top: 24.8%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 28.5%;
+    top: 16.5%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 19.5%;
+    top: 9.5%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 25.5%;
+    top: 22%;
+  }
+
+  // 變頻控制
+  #point-4 {
+    position: absolute;
+    left: 25.8%;
+    top: 4%;
+    max-width: 7rem;
+  }
+}
+
+//CT-32
+#air-water-25 {
+  .point-name {
+    position: absolute;
+    left: 12%;
+    top: 24.8%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 2%;
+    top: 15.5%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 7.2%;
+    top: 9.6%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 0;
+    top: 22%;
+  }
+
+  // 變頻控制
+  #point-4 {
+    position: absolute;
+    left: 0%;
+    top: 4%;
+  }
+}
+
+//CWP-1
+#air-water-26 {
+  .point-name {
+    position: absolute;
+    top: 52%;
+    left: 15%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 20%;
+    top: 45%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 13.65%;
+    top: 45.6%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 20%;
+    top: 51%;
+  }
+}
+
+// CWP-2
+#air-water-27 {
+  .point-name {
+    position: absolute;
+    top: 91%;
+    left: 15%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 20%;
+    top: 83%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 13.7%;
+    top: 84%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 20%;
+    top: 89%;
+  }
+}
+
+//CWP-S
+#air-water-28 {
+  .point-name {
+    position: absolute;
+    top: 70.5%;
+    left: 15%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 20%;
+    top: 63%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 13.68%;
+    top: 64%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 20%;
+    top: 69%;
+  }
+}
+
+//CHP-1
+#air-water-29 {
+  .point-name {
+    position: absolute;
+    top: 55%;
+    left: 64.5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 60.5%;
+    top: 57.8%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 62.7%;
+    top: 48.7%;
+    transform: scaleX(-1);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 65%;
+    top: 58%;
+  }
+}
+
+//CHP-2
+#air-water-30 {
+  .point-name {
+    position: absolute;
+    top: 93.5%;
+    right: 32.5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 60.5%;
+    top: 96%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 62.7%;
+    top: 87.2%;
+    transform: scaleX(-1);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 65%;
+    top: 96.5%;
+  }
+}
+
+//CHP-S
+#air-water-31 {
+  .point-name {
+    position: absolute;
+    top: 74%;
+    left: 64%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 60.5%;
+    top: 76.5%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 62.75%;
+    top: 67.2%;
+    transform: scaleX(-1);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 65%;
+    top: 76.8%;
+  }
+}
+
+//CH-1
+#air-water-32 {
+  .point-name {
+    position: absolute;
+    top: 25.4%;
+    left: 42.5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 48.5%;
+    top: 30.5%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 38.3%;
+    top: 28.5%;
+    transform: scale(1.1);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 46.7%;
+    top: 25.2%;
+  }
+
+  //CH1連鎖啟動
+  #point-4 {
+    position: absolute;
+    left: 39.5%;
+    top: 49.5%;
+  }
+}
+
+//CH-2
+#air-water-33 {
+  .point-name {
+    position: absolute;
+    bottom: 31.5%;
+    left: 42.3%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 48.5%;
+    top: 69%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 38.3%;
+    top: 68.3%;
+    transform: scale(1.1);
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 46.5%;
+    bottom: 30.8%;
+  }
+
+  //CH2連鎖啟動
+  #point-4 {
+    position: absolute;
+    left: 39.5%;
+    top: 88.2%;
+  }
+}
+
+//ZP-1
+#air-water-34 {
+  .point-name {
+    position: absolute;
+    top: 20%;
+    right: 5%;
+  }
+
+  // 區域泵1號啟停
+  #point-1 {
+    position: absolute;
+    left: 85.8%;
+    top: 18%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 90.7%;
+    top: 13.9%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 85%;
+    top: 24%;
+  }
+
+  // 變頻控制
+  #point-4 {
+    position: absolute;
+    left: 91.5%;
+    top: 22.5%;
+  }
+
+  // 變頻控制
+  #point-5 {
+    position: absolute;
+    left: 89.5%;
+    top: 31%;
+  }
+}
+
+//ZP-2
+#air-water-35 {
+  .point-name {
+    position: absolute;
+    top: 47%;
+    right: 5%;
+  }
+
+  // 開關
+  #point-1 {
+    position: absolute;
+    left: 86%;
+    top: 44%;
+  }
+
+  // 狀況
+  #point-2 {
+    position: absolute;
+    left: 90.7%;
+    top: 40.2%;
+  }
+
+  // 跳脫
+  #point-3 {
+    position: absolute;
+    left: 85%;
+    top: 51%;
+  }
+
+  // 變頻控制
+  #point-4 {
+    position: absolute;
+    left: 92%;
+    top: 49.5%;
+  }
+
+  // 變頻控制
+  #point-5 {
+    position: absolute;
+    left: 86.5%;
+    top: 57.5%;
+    max-width: 9rem;
+  }
+}
+
+#air-water-47 {
+  .point-name {
+    display: none;
+  }
+
+  @include wide {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+  }
+
+  // CWST-冷卻水出水溫度
+  .point-item-70 {
+    position: absolute;
+    top: 10%;
+    left: 38%;
+  }
+
+  // CWRT-冷卻水回水溫度
+  .point-item-71 {
+    position: absolute;
+    top: 38.1%;
+    left: 3.1%;
+  }
+
+  // CHRT-回水溫度
+  .point-item-87 {
+    position: absolute;
+    top: 92%;
+    left: 76%;
+  }
+
+  // CHST-出水溫度
+  .point-item-88 {
+    position: absolute;
+    top: 64.2%;
+    left: 88.2%;
+  }
+
+  //CHDPCV-旁通閥控制
+  .point-item-99 {
+    position: absolute;
+    top: 62%;
+    right: 14.5%;
+  }
+
+  //冷卻水溫度設定
+  .point-item-236 {
+    position: absolute;
+    top: 49%;
+    left: 3.2%;
+  }
+
+  // 壓差設定
+  .point-item-239 {
+    position: absolute;
+    top: 73%;
+    right: 11.5%;
+    max-width: 10%;
+
+    @include wide {
+      max-width: none;
+    }
+  }
+
+  // 冰水壓差
+  .point-item-240 {
+    position: absolute;
+    top: 73%;
+    left: 88.5%;
+  }
+
+  //冷卻水塔降載溫度
+  .point-item-298 {
+    position: absolute;
+    top: 29%;
+    left: 1%;
+  }
+
+  // 冷卻水塔最低負載
+  .point-item-300 {
+    position: absolute;
+    top: 5%;
+    left: 13%;
+  }
+
+  // 冷卻水塔單台降載溫度
+  .point-item-301 {
+    position: absolute;
+    top: 29%;
+    left: 12%;
+  }
+
+  //冷卻水塔複載溫度
+  .point-item-302 {
+    position: absolute;
+    top: 29%;
+    left: 24%;
+  }
+}
+
+.total-info {
+  //CDA一樓空壓機用電量
+  .point-item-52 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  //空調總用電量
+  .point-item-235 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

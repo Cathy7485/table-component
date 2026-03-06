@@ -1,0 +1,202 @@
+@use "@/assets/scss/base/grid" as *;
+@use "@/assets/scss/utils/color" as *;
+
+.table-search {
+  max-width: 35%;
+
+  @include tablet-landscape {
+    max-width: 60%;
+  }
+}
+
+.table-nowrap {
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll;
+
+  table {
+    min-width: 75rem;
+  }
+
+  &-text {
+    display: none;
+
+    @include wide {
+      display: block;
+    }
+  }
+}
+
+// label 標籤
+.cell {
+  .label {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+
+    &.label-width {
+      padding: 0.625rem;
+
+      .selector {
+        width: auto;
+      }
+    }
+
+    &.alert-state {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      border-radius: 0.25rem;
+      background: rgba(255, 65, 65, 1);
+      text-indent: -9999px;
+    }
+
+    &.time {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+}
+
+.array-cell {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  gap: 0.625rem;
+}
+
+// 排程-循環週期label
+.default-cell {
+  // 單次
+  .once {
+    background: rgba(240, 253, 244, 1);
+    color: rgba(46, 135, 98, 1);
+    border: solid 0.0625rem rgba(46, 135, 98, 1);
+
+    &.label {
+      display: inline-block;
+      border-radius: 0.5rem;
+      padding: 0.125rem 0.625rem;
+      font-size: 0.875rem;
+    }
+  }
+
+  // 循環
+  .cycle-default {
+    border: none;
+    background: rgba(254, 246, 230, 1);
+    color: rgba(231, 125, 49, 1);
+    border: solid 0.0625rem rgba(231, 125, 49, 1);
+
+    &.label {
+      display: inline-block;
+      border-radius: 0.5rem;
+      padding: 0.125rem 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+  }
+
+  .cycle-holiday {
+    background: rgba(254, 246, 246, 1);
+    color: rgba(255, 65, 65, 1);
+    border: solid 0.0625rem rgba(255, 65, 65, 1);
+
+    &.label {
+      display: inline-block;
+      border-radius: 0.5rem;
+      padding: 0.125rem 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+  }
+
+  // 平日
+  .cycle-weekday {
+    background: rgba(254, 246, 246, 1);
+    color: rgba(6, 132, 187, 1);
+    border: solid 0.0625rem rgba(6, 132, 187, 1);
+
+    &.label {
+      display: inline-block;
+      border-radius: 0.5rem;
+      padding: 0.125rem 0.625rem;
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+  }
+
+  // 警報彈窗等級label
+  .alert-label {
+    border-radius: 0;
+    font-size: 0.875rem;
+
+    &.normal {
+      border: solid 1px rgba(28, 106, 67, 1);
+      background: rgba(28, 106, 67, 0.1);
+      color: rgba(28, 106, 67, 1);
+    }
+
+    &.warning {
+      border: solid 1px rgba(243, 190, 39, 1);
+      background: rgba(243, 190, 39, 0.1);
+      color: rgba(151, 113, 3, 1);
+    }
+
+    &.abnormal {
+      border: solid 1px var(--alert-abnormal);
+      background: rgba(var(--alert-abnormal), 0.1);
+      color: var(--alert-abnormal);
+    }
+
+    &.critical {
+      border: solid 1px var(--alert-critical);
+      background: rgba(var(--alert-critical), 0.1);
+      color: var(--alert-critical);
+    }
+
+    &.stop {
+      border: solid 1px var(--alert-stop);
+      background: rgba(var(--alert-stop), 0.1);
+      color: var(--alert-stop);
+    }
+
+    &.shutdown {
+      border: solid 1px var(--alert-shutdown);
+      background: rgba(var(--alert-shutdown), 0.1);
+      color: var(--alert-shutdown);
+    }
+  }
+
+  .label-class {
+    display: block;
+    text-align: center;
+    font-size: 0.875rem;
+    padding: 0.125rem 0.625rem;
+    border: solid 0.0625rem transparent;
+    border-radius: 0.5rem;
+    min-width: 4.75rem;
+  }
+}
+// 循環
+.array-cell {
+  .cycle-label {
+    display: inline-block;
+    padding: 0.125rem 0.625rem;
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--theme-primary-50);
+    border-color: var(--theme-primary-50);
+    border: solid 0.0625rem;
+    border-radius: 0.5rem;
+  }
+
+  .cycle {
+    border: none;
+    background: rgba(254, 246, 230, 1);
+    color: rgba(231, 125, 49, 1);
+    border: solid 0.0625rem rgba(231, 125, 49, 1);
+  }
+}

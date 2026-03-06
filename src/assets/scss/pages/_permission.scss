@@ -1,0 +1,257 @@
+@use "@/assets/scss/base/grid" as *;
+
+.table-title {
+  display: flex;
+  padding: 1rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.875rem;
+  border-radius: 0.25rem;
+  background: var(--theme-primary-50);
+  padding: 0.5rem 1rem;
+
+  @include desktop {
+    padding: 0.5rem;
+    font-size: 1.25rem;
+  }
+}
+
+#accordionPanels {
+  // 權限手風琴按鈕
+  .accordion-button {
+    border: none;
+  }
+  .el-collapse-item__header {
+    background-color: var(--theme-primary-50);
+    color: white;
+    padding: 0 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    border-radius: 0.25rem;
+  }
+}
+
+.bottom-content {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+
+  button {
+    &:last-child {
+      margin-left: 1.5rem;
+    }
+  }
+}
+// 權限勾勾
+.value-list-block {
+  height: calc(100% - 4.5rem);
+  overflow-y: auto;
+
+  .el-checkbox {
+    .el-checkbox__input {
+      &.is-checked {
+        .el-checkbox__inner {
+          background: rgba(72, 177, 126, 1) !important;
+          border: none !important;
+        }
+      }
+    }
+  }
+
+  .el-checkbox__inner {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+    background: transparent;
+    border: solid 0.125rem var(--theme-primary-60) !important;
+  }
+}
+
+// 手風琴
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .el-collapse {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .el-collapse-item__wrap {
+    background: transparent !important;
+  }
+
+  .accordion-collapse {
+    padding-top: 0.5rem;
+  }
+}
+
+.permission-block {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--theme-text-color);
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+
+  &:first-child {
+    margin-bottom: 0;
+    min-height: 1.25rem;
+  }
+
+  @include wide-xl {
+    font-size: 1.125rem;
+  }
+
+  @include desktop {
+    font-size: 1rem;
+  }
+
+  .left {
+    width: 80%;
+    line-height: 1.2;
+
+    @include wide-xl {
+      width: 60%;
+    }
+
+    @include desktop {
+      width: 30%;
+    }
+
+    @include tablet-landscape {
+      width: 25%;
+      font-size: 0.95rem;
+    }
+  }
+
+  .right {
+    width: 20%;
+
+    @include wide-xl {
+      width: 30%;
+    }
+
+    @include wide {
+      width: 35%;
+    }
+
+    @include desktop {
+      width: 50%;
+    }
+
+    @include tablet-portrait {
+      width: 60%;
+      font-size: 0.9rem;
+    }
+  }
+
+  li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 5rem;
+    margin-bottom: 1rem;
+
+    @include tablet-portrait {
+      min-width: 3rem;
+    }
+  }
+
+  &.label {
+    padding: 1rem;
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    li {
+      margin-bottom: 0;
+      line-height: 1.2;
+    }
+  }
+
+  &.value {
+    li[data-label] {
+      position: relative;
+      justify-content: flex-start;
+      min-height: 1.5rem;
+    }
+
+    .right {
+      display: flex;
+      justify-content: space-between;
+      flex-direction: row;
+
+      li {
+        justify-content: center;
+      }
+    }
+  }
+}
+
+.permission-ul-label {
+  li[data-label] {
+    transition: all 0.3s;
+    overflow: hidden;
+
+    span {
+      opacity: 0.5;
+    }
+
+    &:hover {
+      transition: all 0.3s;
+    }
+  }
+}
+
+// 可選：把 hover 背景色也抽成變數
+$hover-bg: rgb(99 111 128);
+$labels: read, create, update, delete, print;
+
+.permission-block {
+  @each $label in $labels {
+    // 當任何同 label 的 li 被 hover 時
+    &:has(li[data-label="#{$label}"]:hover) {
+      // 針對所有同 label li 套樣式
+      li[data-label="#{$label}"] {
+        span {
+          transition: all 0.3s;
+          opacity: 1;
+        }
+      }
+    }
+  }
+}
+
+.permission-ul {
+  &-label {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    height: 100%;
+  }
+
+  &-value {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+  }
+}

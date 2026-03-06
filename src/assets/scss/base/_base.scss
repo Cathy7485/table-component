@@ -1,0 +1,105 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: "Noto Sans TC", sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-size: clamp(1rem, 1rem + 1vw, 1rem);
+  box-sizing: border-box;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+#app {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow-y: auto;
+
+  background: rgba(233, 239, 245, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+:root {
+  //element-plus變數
+  --el-bg-color-overlay: transparent;
+
+  //主題相關色
+  --theme-color: rgba(11, 168, 237, 1);
+  --theme-bg-color: rgba(249, 252, 255, 1);
+  --theme-text-color: rgba(67, 67, 67, 1);
+  --theme-primary-20: rgba(167, 228, 254, 1);
+  --theme-primary-50: rgba(6, 132, 187, 1);
+  --theme-primary-60: rgba(2, 84, 120, 1);
+
+  // input 外框顏色
+  --el-input-border-color: var(--theme-text-color);
+  --el-border-color: var(--theme-text-color);
+
+  --el-font-size-extra-small: inherit;
+  --el-font-size-small: inherit;
+  --el-font-size-base: inherit; /* 預設文字大小 */
+  --el-font-size-medium: inherit;
+  --el-font-size-large: inherit;
+  --el-font-size-extra-large: inherit;
+
+  --bs-font-sans-serif: "Noto Sans TC";
+
+  // 狀態點開關顏色
+  --state-point-open: rgba(93, 214, 109, 1);
+  --state-point-close: rgb(179, 179, 179);
+
+  // 警報等級顏色
+  --alert-normal: rgb(93, 214, 109); // 正常 0
+  --alert-stop: rgb(179, 179, 179); // 停止 1
+  --alert-warning: rgb(255, 195, 0); // 警告 2
+  --alert-abnormal: rgb(238, 127, 29); // 異常 3
+  --alert-critical: rgb(255, 65, 65); // 嚴重 4
+  --alert-shutdown: rgb(41, 41, 41); // 斷線 5
+
+  // 設備圖控左鍵選單
+  --el-transition-duration: 0.15s;
+  --el-transition-duration-fast: 0.1s;
+
+  // switch
+  --el-switch-on-color: rgba(108, 217, 164, 1);
+  --el-switch-off-color: rgba(221, 229, 237, 1);
+}
+
+.custom-border {
+  border: 0.0625rem solid white !important;
+}
+
+// 卷軸樣式
+::-webkit-scrollbar {
+  width: 0.25rem;
+  height: 0.25rem;
+}
+
+//上下箭頭
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--theme-color);
+  border-radius: 0.9375rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(67, 115, 136, 0.2);
+  border-radius: 0.9375rem;
+}

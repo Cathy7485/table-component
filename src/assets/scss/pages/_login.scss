@@ -1,0 +1,238 @@
+@use "@/assets/scss/utils/color" as *;
+@use "@/assets/scss/base/grid" as *;
+
+.login-left {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: var(--theme-color);
+  flex: 1;
+
+  @include desktop {
+    display: none;
+  }
+
+  .rt-bg {
+    position: absolute;
+    top: -100%;
+    right: -100%;
+  }
+
+  .lb-bg {
+    position: absolute;
+    left: -100%;
+    bottom: -100%;
+  }
+
+  .login-logo {
+    position: relative;
+    margin: 0 auto;
+    max-width: 32.5rem;
+    width: 40%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+}
+
+.login-right {
+  position: relative;
+  width: 0;
+  height: 100vh;
+  background-color: rgba(233, 239, 245, 1);
+  backdrop-filter: blur(1.25rem);
+  opacity: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  @include desktop {
+    transform: none;
+    opacity: 1;
+    flex: 1;
+  }
+
+  .system-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    color: var(--theme-text-color);
+  }
+}
+
+.login-img-block {
+  width: 40%;
+  height: auto;
+  max-width: 22.5rem;
+
+  @include desktop {
+    max-width: 15rem;
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    vertical-align: top;
+    margin-bottom: 0;
+  }
+}
+
+.login-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  &.animate {
+    .login-left {
+      width: 60vw;
+
+      @include desktop {
+        width: 0;
+      }
+    }
+
+    .login-right {
+      animation: slide-in-panel 0.5s ease-in-out forwards;
+      animation-delay: 1s;
+
+      @include desktop {
+        animation: none;
+        animation-delay: 0s;
+      }
+    }
+
+    .rt-bg {
+      top: 0;
+      right: 0;
+      animation: slide-in-tr 0.3s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+
+    .lb-bg {
+      bottom: 0;
+      left: 0;
+      animation: slide-in-bl 0.3s ease-out forwards;
+      animation-delay: 0.1s;
+    }
+  }
+}
+
+.login-form {
+  .el-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.5rem;
+  }
+
+  .el-form-item {
+    margin: 0 !important;
+  }
+
+  .input-icon {
+    position: absolute;
+    top: 50%;
+    left: 0.5rem;
+    transform: translateY(-50%);
+    height: 1.5rem;
+  }
+
+  // input框
+  .el-input__wrapper {
+    padding: 0.3125rem 0.5rem 0.3125rem 2.25rem;
+    box-shadow: 0 0 0 1px rgba(67, 67, 67, 1) inset;
+    border-radius: 0.5rem;
+  }
+
+  .el-input__inner {
+    max-width: 15rem;
+    font-size: 1rem;
+  }
+
+  .login-btn {
+    position: relative;
+    width: 100%;
+    height: auto !important;
+    max-width: 18.5rem;
+    background-color: var(--theme-color);
+    color: white;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.5;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.375rem;
+    margin: 0 auto;
+    box-shadow: 0 0.25rem 0.625rem 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+
+    span {
+      position: relative;
+      z-index: 2;
+    }
+
+    &:hover {
+      background-color: $primary;
+      color: rgba(86, 86, 86, 1);
+      transition: all 0.3s ease;
+    }
+  }
+}
+
+@keyframes slide-in-tr {
+  0% {
+    transform: translate(50px, -50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-bl {
+  0% {
+    transform: translate(-50px, 50px);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-panel {
+  0% {
+    width: 0;
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    width: 40vw;
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

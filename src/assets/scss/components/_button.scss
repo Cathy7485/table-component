@@ -1,0 +1,467 @@
+@use "@/assets/scss/utils/color" as *;
+
+.button {
+  height: auto;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem 1.5rem;
+  border-radius: 0.5rem;
+  background: transparent;
+  border: none;
+  color: var(--theme-color);
+  font-size: 1rem;
+  font-weight: 350;
+  line-height: 1.2;
+  outline: none;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background: $primary;
+  }
+
+  &:active {
+    color: white;
+    background: $primary;
+    transform: scale(0.95);
+  }
+
+  &:focus-visible {
+    color: white;
+    background: $primary;
+    outline: none;
+  }
+
+  &:disabled {
+    background: transparent;
+    cursor: default;
+
+    &:hover {
+      background: transparent;
+    }
+  }
+
+  &.active {
+    background: $primary;
+    color: white;
+    box-shadow: 0px 0px 0px 0.09375rem $primary;
+
+    &:hover {
+      background: var(--theme-color);
+      color: white;
+      box-shadow: 0px 0px 0px 0.09375rem var(--theme-color);
+      transition: all 0.5s;
+    }
+  }
+
+  &.display-none {
+    margin-left: 0 !important;
+    padding: 0;
+    font-size: 0;
+    opacity: 0;
+  }
+
+  &.el-button {
+    height: auto;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    background: var(--theme-color);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 350;
+    line-height: 1.2;
+    outline: none;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--theme-primary-50);
+    }
+  }
+}
+
+.button-xl {
+  border-radius: 0.5rem;
+  padding: 1rem 1.5rem;
+  font-size: 1.25rem;
+
+  &:hover {
+    background: transparent;
+  }
+
+  &.primary-button {
+    &::before {
+      border-radius: 0.5rem;
+    }
+  }
+}
+
+.function-button {
+  position: relative;
+  min-height: 2.25rem;
+  line-height: 1;
+  color: $primary;
+  box-shadow: 0px 0px 0px 0.0625rem $primary;
+
+  &:hover {
+    background: $primary;
+  }
+
+  span {
+    display: inline-flex;
+    align-items: center;
+  }
+
+  svg {
+    margin-left: 0.5rem;
+  }
+}
+
+.primary-button {
+  position: relative;
+  background: var(--theme-color);
+  color: white;
+
+  span {
+    position: relative;
+    color: white;
+    z-index: 2;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    inset: 0;
+    border-radius: 0.5rem;
+    z-index: 0;
+  }
+
+  &:hover {
+    background: var(--theme-primary-50);
+  }
+}
+
+.outline-button {
+  position: relative;
+  box-shadow: 0px 0px 0px 0.09375rem var(--theme-color);
+  background: transparent;
+  color: var(--theme-color);
+
+  span {
+    position: relative;
+    z-index: 2;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: transparent;
+    box-shadow: 0 0.125rem 0.625rem 0 rgba(118, 118, 118, 0.5);
+    z-index: 0;
+  }
+
+  &:hover {
+    background: var(--theme-primary-60);
+    box-shadow: 0px 0px 0px 0.09375rem var(--theme-primary-60);
+    transition: background-color 0.3s ease;
+  }
+
+  &.el-button {
+    position: relative;
+    box-shadow: 0px 0px 0px 0.09375rem var(--theme-color);
+    background: transparent;
+    color: var(--theme-color);
+
+    &:hover {
+      color: white;
+      background: var(--theme-primary-60);
+      box-shadow: 0px 0px 0px 0.09375rem var(--theme-primary-60);
+      transition: background-color 0.3s ease;
+    }
+  }
+}
+
+.aside-button {
+  font-size: 1.25rem;
+  color: rgba(white, 50%);
+
+  svg {
+    opacity: 0.5;
+  }
+
+  &.active {
+    color: white;
+
+    svg {
+      opacity: 1;
+    }
+  }
+}
+
+// 分頁按鈕
+.page-controller {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--theme-color);
+
+  &.record {
+    margin-top: 1rem;
+  }
+
+  button {
+    display: inline-block;
+    height: 1.875rem;
+    background: var(--theme-color);
+    box-shadow: none;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.25rem 0.5rem;
+    color: white;
+    font-weight: 700;
+    transition: all 0.3s;
+    cursor: pointer;
+
+    .pi {
+      vertical-align: middle;
+    }
+
+    &:hover {
+      background: $primary;
+      transition: all 0.3s;
+    }
+
+    &.disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    &.hidden {
+      display: none;
+    }
+
+    &:first-child {
+      margin-right: 1.5rem;
+    }
+
+    &:last-child {
+      margin-left: 1.5rem;
+    }
+  }
+
+  .page-num {
+    padding: 0.25rem 0.5rem;
+    margin: 0 0.25rem;
+    transition: all 0.3s;
+    color: rgba(77, 84, 81, 1);
+    text-decoration: none;
+    cursor: pointer;
+    opacity: 0.5;
+
+    &:hover {
+      color: var(--theme-color);
+      opacity: 1;
+      transition: all 0.3s;
+    }
+
+    &.active {
+      font-size: 1.25rem;
+      cursor: initial;
+      opacity: 1;
+
+      &:hover {
+        color: rgba(77, 84, 81, 1);
+        background: transparent;
+      }
+    }
+  }
+}
+
+// 區域總覽表格按鈕正常顏色
+.button-bg-white {
+  background-color: rgba(155, 173, 205, 0.5) !important;
+}
+
+// 選擇項目的button
+.selected-points-button {
+  &:hover {
+    & + .selected-points-block {
+      z-index: 2;
+      opacity: 1;
+      transition: opacity 0.3s;
+    }
+  }
+}
+
+.selected-points-block {
+  display: inline-flex;
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 12.5rem;
+  height: auto;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  background: var(--theme-bg-color);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.selected-point {
+  color: white;
+  margin-bottom: 0.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// table右側的按鈕
+.actions-buttons {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+
+  .el-button {
+    padding: 0.4375rem;
+  }
+}
+
+// 帳號權限 手風琴按鈕
+.permission-section {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+
+  .table-title {
+    position: relative;
+    transition: transform 0.3s;
+  }
+}
+
+// 系統按鈕
+.system-button-group {
+  display: flex;
+  align-items: center;
+
+  .button {
+    height: 2.5rem;
+    margin-right: 0.75rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &.active {
+      box-shadow: 0px 0px 0.09375rem var(--theme-color);
+      background-color: var(--theme-color);
+    }
+  }
+
+  .primary-button {
+    background-color: var(--theme-color);
+  }
+}
+
+.layout-left {
+  .system-button-group {
+    height: auto;
+    flex-direction: column;
+    gap: 0.75rem;
+
+    .button {
+      width: 100%;
+      padding: 0.5rem;
+      margin: 0;
+    }
+  }
+}
+
+.outline-label {
+  display: inline-block;
+  padding: 0.0625rem 0.625rem;
+  border-radius: 0.5rem;
+  border: solid 0.0625rem var(--theme-text-color);
+  font-size: 0.875rem;
+  color: var(--theme-text-color);
+
+  &.warning {
+    border-color: rgba(255, 137, 0, 1);
+    color: rgba(255, 137, 0, 1);
+  }
+
+  &.normal {
+    border-color: rgba(0, 229, 143, 1);
+    color: rgba(0, 229, 143, 1);
+  }
+
+  &.danger {
+    border-color: rgba(255, 65, 65, 1);
+    color: rgba(255, 65, 65, 1);
+  }
+}
+
+// 警報彈窗可否歸檔按鈕
+.clearAlertdisabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+// 電力系統、空壓 點位選單按鈕
+.setting-item-btn {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--theme-primary-50);
+    color: #fff;
+  }
+}
+
+.popover-setting-btn {
+  position: absolute !important;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  border: none !important;
+  font-size: 0.75rem !important;
+  padding: 0;
+  transition: all 0.3s;
+
+  color: transparent !important;
+  background: transparent !important;
+
+  // -------- 除錯模式 --------
+  // color: #000;
+  // background: rgba(255, 16, 16, 0.5);
+  // -------- 除錯模式 --------
+
+  &:hover {
+    background-color: transparent;
+    color: transparent;
+    box-shadow: inset 0 0 0 1px rgb(238, 127, 29);
+  }
+}
