@@ -1,19 +1,23 @@
 <script setup>
 import { onMounted } from "vue";
-// import adminHeader from '@/components/AdminHeader.vue';
-// import LoadingComponent from '@/components/LoadingComponent.vue';
-import axios from "axios";
+
+import LoadingComponent from "@/components/LoadingComponent/index.vue";
+import useLoadingStore from "@/stores/loadingStore";
+
+const loadingStore = useLoadingStore();
+const { isLoading } = storeToRefs(loadingStore);
+const { handleLoading } = loadingStore;
 
 onMounted(() => {
-  const token = document.cookie.replace(/(?:(?:^|.*;\s*)spaceToken\s*=\s*([^;]*).*$)|^.*$/, "$1");
-  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  setTimeout(() => {
+    handleLoading(false); // 1秒後隱藏loading
+  }, 1000);
 });
 </script>
 
 <template>
-  <!-- <adminHeader /> -->
-  <div class="container">
-    <!-- <LoadingComponent /> -->
+  <main class="main">
+    <LoadingComponent :isLoading="isLoading" />
     <router-view />
-  </div>
+  </main>
 </template>
