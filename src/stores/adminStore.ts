@@ -2,7 +2,7 @@ import { supabase } from "@/utils/supabase";
 import { defineStore } from "pinia";
 import { useRouter } from "vue-router";
 
-import useLoadingStore from "@/stores/loadingStore.ts";
+import { ElMessage } from "element-plus";
 
 const useAdminStore = defineStore("adminStore", () => {
   const router = useRouter();
@@ -12,17 +12,16 @@ const useAdminStore = defineStore("adminStore", () => {
     password: "",
   });
 
-  const loadingStore = useLoadingStore();
-  const { handleLoading } = loadingStore;
-
   const handleLogin = async () => {
     try {
       await supabase.auth.signInWithPassword({
         email: user.value.email,
         password: user.value.password,
       });
-      handleLoading(true); // 顯示loading
-      router.push("/dashboard");
+      ElMessage.success("登入成功");
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
     } catch (error) {
       console.error("帳號或密碼錯誤");
       alert("帳號或密碼錯誤");

@@ -1,6 +1,33 @@
 @use "@/assets/scss/base/grid" as *;
 @use "@/assets/scss/utils/color" as *;
 
+.select-img-block {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: contain;
+  }
+}
+
+.el-table thead {
+  background: #4a4a4a;
+  color: white !important;
+  font-size: 1rem;
+}
+
+// table下底線
+.el-table__body {
+  td.el-table__cell {
+    border-bottom: solid 1px #b0b0b0 !important;
+  }
+}
+
 .table-search {
   max-width: 35%;
 

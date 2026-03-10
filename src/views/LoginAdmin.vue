@@ -1,22 +1,18 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import useAdminStore from "@/stores/adminStore";
+import useLoadingStore from "@/stores/loadingStore";
 
 const adminStore = useAdminStore();
 
 const { user } = storeToRefs(adminStore);
 const { handleLogin } = adminStore;
 
-const animate = ref(false);
-
-onMounted(() => {
-  // 動畫
-  setTimeout(() => (animate.value = true), 50);
-});
+onMounted(() => {});
 </script>
 
 <template>
-  <div class="login-wrapper" :class="{ animate }">
+  <div class="login-wrapper">
     <div class="login-left">
       <h1>表格管理系統</h1>
     </div>
