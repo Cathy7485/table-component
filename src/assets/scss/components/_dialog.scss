@@ -34,19 +34,26 @@
   overflow: hidden;
   z-index: 5;
 
-  @include wide {
+  @include desktop {
     max-width: 95vw;
   }
 
+  .dialog-content {
+    max-height: 80vh;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem 0;
+  }
+
   .column-layout {
-    margin-bottom: 1.5rem;
     padding: 0 0.75rem;
   }
 
   .column-block {
     display: flex;
     align-items: center;
-    margin-bottom: 1.5rem;
     gap: 1.25rem;
 
     &:last-child {
@@ -55,6 +62,10 @@
 
     @include desktop {
       flex-wrap: wrap;
+
+      &.days {
+        flex-wrap: nowrap;
+      }
 
       .date-picker-block {
         width: 100%;
@@ -92,7 +103,6 @@
   line-height: 1.5;
   color: white;
   padding: 0.75rem 1rem;
-  margin-bottom: 0.75rem;
   background: var(--theme-color);
 
   .close-btn {
@@ -167,6 +177,7 @@
   }
 
   .el-form-item {
+    margin-bottom: 0;
     gap: 0.25rem;
   }
 }

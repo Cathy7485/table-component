@@ -1,10 +1,14 @@
 import type { TSchedule } from "@/types/schedule";
 import useScheduleStore from "@/stores/scheduleStore";
+import { ElMessage, ElMessageBox } from "element-plus";
 
 const scheduleStore = useScheduleStore();
-const { addSchedule } = scheduleStore;
+const { addSchedule, updateSchedule } = scheduleStore;
 
 const useScheduleDialog = () => {
+  // 選擇的點位
+  const selectPoints = ref<number[]>([]);
+
   // 彈窗狀態
   const isDialogVisible = ref(false);
 
@@ -36,14 +40,40 @@ const useScheduleDialog = () => {
         openDialog();
         dialogState.dialogTitle = "新增";
         dialogState.formData = data;
+        selectPoints.value = [];
         break;
       case "modify":
-        openDialog();
-        dialogState.dialogTitle = "編輯";
+        if (data) {
+          openDialog();
+          dialogState.dialogTitle = "編輯";
+
+          dialogState.formData = { ...data };
+
+          if (data.schedule_points) {
+            selectPoints.value = data.schedule_points.map((point: any) => point.id);
+          } else {
+            selectPoints.value = [];
+          }
+        }
         break;
       case "delete":
-        openDialog();
-        dialogState.dialogTitle = "刪除";
+        ElMessageBox.confirm(`確定要刪除嗎？此動作不可復原。`, "警告", {
+          confirmButtonText: "確定刪除",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+          .then(async () => {
+            const result = await scheduleStore.deleteSchedule(data.id);
+
+            if (result.success) {
+              ElMessage.success("已成功刪除排程");
+            } else {
+              ElMessage.error("刪除失敗，請稍後再試");
+            }
+          })
+          .catch(() => {
+            // 使用者點擊取消，不做任何事
+          });
         break;
     }
   };
@@ -56,14 +86,18 @@ const useScheduleDialog = () => {
   ) => {
     if (!formData) return;
 
-    console.log("formData", formData);
-    console.log("tab", tab);
     try {
       if (dialogState.type === "create") {
-        console.log("新增");
-        addSchedule(formData, selectPoints);
+        const result = await addSchedule(formData, selectPoints);
+        if (result.success) {
+          ElMessage.success("排程新增成功！");
+        }
       } else if (dialogState.type === "modify") {
-        console.log("編輯");
+        const id = dialogState.formData?.id as number;
+        const result = await updateSchedule(id, formData, selectPoints);
+        if (result.success) {
+          ElMessage.success("排程修改成功！");
+        }
       }
       closeDialog();
     } catch (err) {
@@ -74,6 +108,7 @@ const useScheduleDialog = () => {
   return {
     isDialogVisible,
     dialogState,
+    selectPoints,
     openDialog,
     closeDialog,
     handleCallDialog,

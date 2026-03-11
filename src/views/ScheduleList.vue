@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import LoadingComponent from "@/components/LoadingComponent/index.vue";
+import useLoadingStore from "@/stores/loadingStore";
+
 import TableWrapper from "@/components/Table/TableWrapper.vue";
 import useScheduleStore from "@/stores/scheduleStore";
 import useScheduleDialog from "@/composables/scheduleDialog.ts";
@@ -11,6 +14,9 @@ import { SCHEDULE_RULES, SCHEDULES_TABLE_HEAD } from "@/constants/schedule";
 const scheduleStore = useScheduleStore();
 const { schedules, pointsList } = storeToRefs(scheduleStore);
 const { fetchSchedules, fetchPointOptions } = scheduleStore;
+
+const loadingStore = useLoadingStore();
+const { isLoading } = storeToRefs(loadingStore);
 
 onMounted(async () => {
   await fetchSchedules();
@@ -31,13 +37,15 @@ const editGroup = computed(() => {
   const btnGroup: any[] = [];
   btnGroup.push({
     iconInfo: { component: IconEdit },
-    // callback: (data: any) => {
-    //   // handleCallDialog("modify", data);
-    // },
+    callback: (data: any) => {
+      handleCallDialog("modify", data);
+    },
   });
   btnGroup.push({
     iconInfo: { component: IconDelete },
-    // callback: (data: any) => handleCallDialog("delete", data),
+    callback: (data: any) => {
+      handleCallDialog("delete", data);
+    },
   });
 
   return {
@@ -67,7 +75,9 @@ const handleSwitchChange = async ({ row, value }: { row: any; value: boolean }) 
 </script>
 
 <template>
-  <div class="container layout">
+  <LoadingComponent v-if="isLoading" :isLoading="isLoading" />
+
+  <div class="container layout" v-else>
     <h2>排程管理系統</h2>
 
     <div class="actions-bar">

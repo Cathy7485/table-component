@@ -26,6 +26,54 @@ const closeDialog = () => {
   emit("close");
 };
 
+const resetForm = () => {
+  // 重置表單
+  Object.assign(formData, {
+    schedule_name: "",
+    schedule_note: "",
+    boot_time: "",
+    stop_time: "",
+    week: [],
+    schedule_type: "",
+    editor: "",
+    edit_time: "",
+  });
+
+  // 重置變數
+  selectPoints.value = [];
+  selectedTab.value = 1;
+
+  // 清除紅字警告
+  nextTick(() => {
+    formRef.value?.clearValidate();
+  });
+};
+
+// 監聽彈窗顯示狀態
+watch(dialogVisible, (isVisible) => {
+  if (isVisible) {
+    if (dialogType.value === "modify" && props.defaultFormData) {
+      // 編輯
+      Object.assign(formData, props.defaultFormData);
+
+      if (props.defaultFormData.schedule_points) {
+        selectPoints.value = props.defaultFormData.schedule_points.map((point: any) => point.id);
+      } else {
+        selectPoints.value = [];
+      }
+
+      // 根據有無週次判斷 Tab 切換
+      selectedTab.value = props.defaultFormData.week?.length > 0 ? 2 : 1;
+    } else {
+      // 新增清空資料
+      resetForm();
+    }
+  } else {
+    // 關閉時清空
+    resetForm();
+  }
+});
+
 // 選擇的控制項目點位
 const selectPoints = ref<number[]>([]);
 
@@ -143,7 +191,7 @@ const mergedRules = computed<Record<string, FormItemRule[]>>(() => {
 
   return rules;
 });
-
+// ----------------------------------
 // 送出表單
 const handleSubmit = () => {
   formRef.value?.validate(async (valid) => {
@@ -202,144 +250,151 @@ const handleSubmit = () => {
             {{ dialogTitle }}排程
             <div class="close-btn" @click="closeDialog">關閉</div>
           </div>
-          <div class="column-block">
-            <el-radio-group v-model="selectedTab" class="cycle-type">
-              <el-radio :value="1">單次</el-radio>
-              <el-radio :value="2">循環</el-radio>
-            </el-radio-group>
-          </div>
-
-          <div v-if="selectedTab === 2" class="column-layout">
+          <div class="dialog-content">
             <div class="column-block">
-              <div class="input-column-group">
-                <el-form-item label="星期" prop="week">
-                  <div class="input-column-group">
-                    <el-checkbox-group v-model="formData.week">
-                      <el-checkbox-button
-                        v-for="item in cycleOptions"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
-                      >
-                        {{ item.label }}
-                      </el-checkbox-button>
-                    </el-checkbox-group>
-                  </div>
-                </el-form-item>
+              <el-radio-group v-model="selectedTab" class="cycle-type">
+                <el-radio :value="1">單次</el-radio>
+                <el-radio :value="2">循環</el-radio>
+              </el-radio-group>
+            </div>
+
+            <div v-if="selectedTab === 2" class="column-layout">
+              <div class="column-block">
+                <div class="input-column-group">
+                  <el-form-item label="星期" prop="week">
+                    <div class="input-column-group">
+                      <el-checkbox-group v-model="formData.week">
+                        <el-checkbox-button
+                          v-for="item in cycleOptions"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                          {{ item.label }}
+                        </el-checkbox-button>
+                      </el-checkbox-group>
+                    </div>
+                  </el-form-item>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div v-if="selectedTab === 2" class="column-layout">
-            <div class="column-block">
-              <div
-                :class="[
-                  'input-column-group button outline-button',
-                  dayLabel === '平日' ? 'active' : '',
-                ]"
-                @click="selectWeekDays([1, 2, 3, 4, 5])"
-              >
-                平日
-              </div>
-              <div
-                :class="[
-                  'input-column-group button outline-button',
-                  dayLabel === '假日' ? 'active' : '',
-                ]"
-                @click="selectWeekDays([6, 7])"
-              >
-                假日
+            <div v-if="selectedTab === 2" class="column-layout">
+              <div class="column-block days">
+                <div
+                  :class="[
+                    'input-column-group button outline-button',
+                    dayLabel === '平日' ? 'active' : '',
+                  ]"
+                  @click="selectWeekDays([1, 2, 3, 4, 5])"
+                >
+                  平日
+                </div>
+                <div
+                  :class="[
+                    'input-column-group button outline-button',
+                    dayLabel === '假日' ? 'active' : '',
+                  ]"
+                  @click="selectWeekDays([6, 7])"
+                >
+                  假日
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="column-layout">
-            <div class="column-block">
-              <div class="input-column-group">
-                <el-form-item label="開啟時間" prop="boot_time">
-                  <template v-if="selectedTab === 1">
-                    <DateTimePicker
-                      v-model:time="formData.boot_time"
-                      @time="handleBootTime"
-                      id="boot_time"
-                    />
-                  </template>
-                  <template v-else>
-                    <TimePicker
-                      id="start_time"
-                      v-model:time="formData.boot_time"
-                      placeholder="請選擇開始時間"
-                      @time="handleBootTime"
-                    />
-                  </template>
-                </el-form-item>
-              </div>
-              <div class="input-column-group">
-                <el-form-item label="關閉時間" prop="stop_time">
-                  <template v-if="selectedTab === 1">
-                    <DateTimePicker
-                      v-model:time="formData.stop_time"
-                      @time="handleStopTime"
-                      id="stop_time"
-                    />
-                  </template>
-                  <template v-else>
-                    <TimePicker
-                      id="stop_time"
-                      v-model:time="formData.stop_time"
-                      placeholder="請選擇結束時間"
-                      @time="handleStopTime"
-                    />
-                  </template>
-                </el-form-item>
+            <div class="column-layout">
+              <div class="column-block">
+                <div class="input-column-group">
+                  <el-form-item label="開啟時間" prop="boot_time">
+                    <template v-if="selectedTab === 1">
+                      <DateTimePicker
+                        v-model:time="formData.boot_time"
+                        @time="handleBootTime"
+                        id="boot_time"
+                      />
+                    </template>
+                    <template v-else>
+                      <TimePicker
+                        id="start_time"
+                        v-model:time="formData.boot_time"
+                        placeholder="請選擇開始時間"
+                        @time="handleBootTime"
+                      />
+                    </template>
+                  </el-form-item>
+                </div>
+                <div class="input-column-group">
+                  <el-form-item label="關閉時間" prop="stop_time">
+                    <template v-if="selectedTab === 1">
+                      <DateTimePicker
+                        v-model:time="formData.stop_time"
+                        @time="handleStopTime"
+                        id="stop_time"
+                      />
+                    </template>
+                    <template v-else>
+                      <TimePicker
+                        id="stop_time"
+                        v-model:time="formData.stop_time"
+                        placeholder="請選擇結束時間"
+                        @time="handleStopTime"
+                      />
+                    </template>
+                  </el-form-item>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="column-layout">
-            <div class="column-block">
-              <div class="input-column-group">
-                <el-form-item label="排程名稱" prop="schedule_name">
-                  <el-input v-model="formData.schedule_name" placeholder="輸入名稱" />
-                </el-form-item>
+            <div class="column-layout">
+              <div class="column-block">
+                <div class="input-column-group">
+                  <el-form-item label="排程名稱" prop="schedule_name">
+                    <el-input v-model="formData.schedule_name" placeholder="輸入名稱" />
+                  </el-form-item>
+                </div>
+                <div class="input-column-group">
+                  <el-form-item label="控制項目" prop="point_num_list">
+                    <el-select
+                      v-model="selectPoints"
+                      multiple
+                      collapse-tags
+                      placeholder="請選擇項目"
+                    >
+                      <el-option
+                        v-for="item in dialogPoints"
+                        :key="item.id"
+                        :label="item.point_name"
+                        :value="item.id"
+                      />
+                    </el-select>
+                  </el-form-item>
+                </div>
               </div>
-              <div class="input-column-group">
-                <el-form-item label="控制項目" prop="point_num_list">
-                  <el-select v-model="selectPoints" multiple collapse-tags placeholder="請選擇項目">
-                    <el-option
-                      v-for="item in dialogPoints"
-                      :key="item.id"
-                      :label="item.point_name"
-                      :value="item.id"
+            </div>
+
+            <div class="column-layout">
+              <div class="column-block">
+                <div class="input-column-group">
+                  <el-form-item label="排程描述" prop="schedule_note">
+                    <el-input
+                      v-model="formData.schedule_note"
+                      :rows="3"
+                      type="textarea"
+                      placeholder="輸入文字內容"
                     />
-                  </el-select>
-                </el-form-item>
+                  </el-form-item>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div class="column-layout">
-            <div class="column-block">
-              <div class="input-column-group">
-                <el-form-item label="排程描述" prop="schedule_note">
-                  <el-input
-                    v-model="formData.schedule_note"
-                    :rows="3"
-                    type="textarea"
-                    placeholder="輸入文字內容"
-                  />
-                </el-form-item>
-              </div>
+            <div class="column-layout column-footer">
+              <button type="button" class="button outline-button" @click="closeDialog">
+                <span>取消</span>
+              </button>
+              <button type="button" class="button primary-button" @click="handleSubmit">
+                <span>確認</span>
+              </button>
             </div>
-          </div>
-
-          <div class="column-layout column-footer">
-            <button type="button" class="button outline-button" @click="closeDialog">
-              <span>取消</span>
-            </button>
-            <button type="button" class="button primary-button" @click="handleSubmit">
-              <span>確認</span>
-            </button>
           </div>
         </el-form>
       </div>

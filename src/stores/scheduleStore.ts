@@ -1,15 +1,34 @@
 import type { TPointList, TSchedule } from "@/types/schedule";
 import { supabase } from "@/utils/supabase";
+import useLoadingStore from "@/stores/loadingStore";
 
 const useScheduleStore = defineStore("scheduleStore", () => {
-  const isLoading = ref(true);
+  const loadingStore = useLoadingStore();
+  const { handleLoading } = loadingStore;
+
+  // 點位資料
+  const pointsList = ref<TPointList[]>([]);
+  // 取得點位資料
+  const fetchPointOptions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("points")
+        .select("id, point_name, point_type")
+        .order("point_name");
+
+      if (error) throw error;
+      if (data) pointsList.value = data;
+    } catch (error) {
+      console.error("抓取點位選單失敗:", error);
+    }
+  };
 
   // 排程資料
   const schedules = ref<TSchedule[]>([]);
 
   // 取得排程資料
   const fetchSchedules = async () => {
-    isLoading.value = true;
+    handleLoading(true);
     try {
       const { data, error } = await supabase
         .from("schedules") // 資料表名稱
@@ -40,28 +59,33 @@ const useScheduleStore = defineStore("scheduleStore", () => {
           };
         });
       }
-      isLoading.value = false;
+      handleLoading(false);
     } catch (error) {
       console.error("抓取資料失敗:", error);
     } finally {
-      isLoading.value = false;
+      handleLoading(false);
     }
   };
 
-  // 點位資料
-  const pointsList = ref<TPointList[]>([]);
-  // 取得點位資料
-  const fetchPointOptions = async () => {
+  // 刪除排程資料
+  const deleteSchedule = async (id: number) => {
     try {
-      const { data, error } = await supabase
-        .from("points")
-        .select("id, point_name, point_type")
-        .order("point_name");
+      handleLoading(true);
+
+      // 從 Supabase 刪除資料
+      const { error } = await supabase.from("schedules").delete().eq("id", id); // 匹配 ID 進行刪除
 
       if (error) throw error;
-      if (data) pointsList.value = data;
+
+      // 更新：直接從現有的 schedules 陣列中移除
+      schedules.value = schedules.value.filter((item) => item.id !== id);
+
+      return { success: true };
     } catch (error) {
-      console.error("抓取點位選單失敗:", error);
+      console.error("刪除失敗:", error);
+      return { success: false, error };
+    } finally {
+      handleLoading(false);
     }
   };
 
@@ -111,12 +135,59 @@ const useScheduleStore = defineStore("scheduleStore", () => {
     }
   };
 
+  // 編輯排程
+  const updateSchedule = async (id: number, payload: any, selectedPointIds: number[]) => {
+    try {
+      handleLoading(true);
+
+      // 更新主表 (schedules)
+      const { error: scheduleError } = await supabase
+        .from("schedules")
+        .update(payload)
+        .eq("id", id);
+
+      if (scheduleError) throw scheduleError;
+
+      // 處理點位關聯 (先刪除舊的，再新增新的)
+      // 刪除該排程原本所有的關聯
+      const { error: deleteError } = await supabase
+        .from("schedule_points")
+        .delete()
+        .eq("schedule_id", id);
+
+      if (deleteError) throw deleteError;
+
+      // 插入新的關聯
+      if (selectedPointIds.length > 0) {
+        const relationRows = selectedPointIds.map((pid) => ({
+          schedule_id: id,
+          point_id: pid,
+        }));
+
+        const { error: insertError } = await supabase.from("schedule_points").insert(relationRows);
+
+        if (insertError) throw insertError;
+      }
+
+      // 重新抓取資料
+      await fetchSchedules();
+      return { success: true };
+    } catch (error) {
+      console.error("更新失敗:", error);
+      return { success: false, error };
+    } finally {
+      handleLoading(false);
+    }
+  };
+
   return {
-    schedules,
-    fetchSchedules,
     pointsList,
     fetchPointOptions,
+    schedules,
+    fetchSchedules,
     addSchedule,
+    deleteSchedule,
+    updateSchedule,
   };
 });
 
