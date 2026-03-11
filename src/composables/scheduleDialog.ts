@@ -49,10 +49,15 @@ const useScheduleDialog = () => {
   };
 
   // 送出表單
-  const submitDialog = async (formData: TSchedule, tab: number | null, selectPoints: number[]) => {
+  const submitDialog = async (
+    formData: Partial<TSchedule>,
+    tab: number | null,
+    selectPoints: number[],
+  ) => {
     if (!formData) return;
 
     console.log("formData", formData);
+    console.log("tab", tab);
     try {
       if (dialogState.type === "create") {
         console.log("新增");

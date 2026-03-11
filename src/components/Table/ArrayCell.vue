@@ -1,10 +1,8 @@
 <script lang="ts" setup>
-import TagCollapse, { TTagPoint } from "@/components/Table/TagCollapse.vue";
-import { TSettingValue } from "@/store/alarmSetting/type";
-import { TGroup } from "@/store/schedule/group/type";
+import TagCollapse, { type TTagPoint } from "@/components/Table/TagCollapse.vue";
 
 const { values, mapping, replace, bgColor } = defineProps<{
-  values: Array<string | number> | TTagPoint[] | TSettingValue[] | TGroup[];
+  values: Array<string | number> | TTagPoint[];
   mapping?: Record<string, string>;
   replace?: string;
   bgColor?: Record<string, string> | string;
@@ -26,15 +24,6 @@ const scheduleTimeTooltip = (timeList: string[]) => {
   <div class="array-cell">
     <div v-if="type === 'schedule_points'" class="d-flex flex-wrap">
       <TagCollapse :items="values as TTagPoint[]" :max="1" />
-    </div>
-
-    <div
-      v-else-if="type === 'point_num_group'"
-      v-for="item in values as TGroup[]"
-      :key="item.point_num"
-      class="cycle-label"
-    >
-      {{ item.point_name }}
     </div>
 
     <template v-else-if="type === 'boot_time' || type === 'stop_time'">
@@ -65,7 +54,7 @@ const scheduleTimeTooltip = (timeList: string[]) => {
       v-else
       v-for="(item, idx) in values as number[]"
       :key="idx"
-      :style="{ backgroundColor: bgColor?.[item] || '' }"
+      :style="{ backgroundColor: typeof bgColor === 'object' ? bgColor?.[item] : bgColor || '' }"
       :class="['cycle-label', type === 'week' ? 'cycle' : '']"
     >
       {{ mapping?.[item] ?? replace ?? item }}

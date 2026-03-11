@@ -12,20 +12,6 @@ const scheduleStore = useScheduleStore();
 const { schedules, pointsList } = storeToRefs(scheduleStore);
 const { fetchSchedules, fetchPointOptions } = scheduleStore;
 
-// 新增排程
-// const addNewSchedule = async (data: TSchedule) => {
-//   const { error } = await supabase.from("schedules").insert([
-//     {
-//       ...data,
-//       // 如果 week 是陣列，Supabase 的 JS SDK 會自動幫你處理對應
-//       edit_time: new Date().toISOString(),
-//     },
-//   ]);
-
-//   if (error) console.error("Error:", error);
-//   else console.log("成功建立排程！");
-// };
-
 onMounted(async () => {
   await fetchSchedules();
   await fetchPointOptions();
@@ -45,9 +31,9 @@ const editGroup = computed(() => {
   const btnGroup: any[] = [];
   btnGroup.push({
     iconInfo: { component: IconEdit },
-    callback: (data: any) => {
-      // handleCallDialog("modify", data);
-    },
+    // callback: (data: any) => {
+    //   // handleCallDialog("modify", data);
+    // },
   });
   btnGroup.push({
     iconInfo: { component: IconDelete },

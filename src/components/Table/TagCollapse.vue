@@ -1,8 +1,7 @@
 <script setup lang="ts">
 export type TTagPoint = {
-  point_num: number;
+  id: number;
   point_name: string;
-  point_show: string;
 };
 
 const props = defineProps<{
@@ -16,16 +15,14 @@ const maxShow = props.max ?? 3;
 const allTags = computed(() => {
   if (props.items.length > 0 && typeof props.items[0] === "object") {
     return (props.items as TTagPoint[]).map((it) => ({
-      value: it.point_num,
+      value: it.id,
       label: it.point_name,
-      show: it.point_show,
     }));
   }
 
   return (props.items as number[]).map((num) => ({
     value: num,
     label: props.labelMap?.[num] ?? String(num),
-    show: null,
   }));
 });
 
@@ -35,19 +32,14 @@ const hiddenItems = computed(() => allTags.value.slice(maxShow));
 
 <template>
   <div class="tag-collapse">
-    <el-tooltip
+    <el-tag
       v-if="visibleItems.length > 0"
       v-for="item in visibleItems"
       :key="item.value"
       class="box-item"
-      effect="light"
-      :content="item.show"
-      placement="top-start"
     >
-      <el-tag size="small" type="info" class="tag-item">
-        {{ item.label }}
-      </el-tag>
-    </el-tooltip>
+      {{ item.label }}
+    </el-tag>
 
     <!-- 折疊的 +N 標籤 -->
     <el-tooltip
@@ -55,7 +47,6 @@ const hiddenItems = computed(() => allTags.value.slice(maxShow));
       effect="dark"
       placement="right-start"
       class="more-tag"
-      trigger="click"
       style="max-height: 160px !important; overflow: auto !important"
     >
       <template #content>
@@ -64,7 +55,6 @@ const hiddenItems = computed(() => allTags.value.slice(maxShow));
           :key="item.value"
           class="box-item"
           effect="light"
-          :content="item.show"
           placement="right-start"
         >
           <div class="tooltip-item">

@@ -9,10 +9,10 @@ const props = defineProps<{
   item: {
     prop: string;
     type?: string;
-    mapping?: any;
+    mapping?: Record<string, string>;
     replace?: any;
-    backgroundColor?: string;
-    borderColor?: string;
+    backgroundColor?: any; // 支援物件或字串
+    borderColor?: any;
     label?: string;
   };
   switchCallback?: (args: { row: any; value: boolean }) => void;
@@ -20,43 +20,24 @@ const props = defineProps<{
 
 const { row, item, switchCallback } = toRefs(props);
 
-// v-model 用 value
-const value = computed<boolean>({
-  get: () => {
-    // 如果沒有值，預設為 --（避免傳 undefined 給 SwitchCell）
-    return (row.value?.[item.value.prop] ?? "- -") as boolean;
-  },
-  set: (val: boolean) => {
-    // 1. 先把 row[item.prop] 直接改成新值，Vue 才會重新 render
-    row[item.value.prop] = val;
-    // 2. 再呼叫 callback，讓父層去呼叫 API、同步資料庫
-    switchCallback.value({ row, value: val });
-  },
-});
+const rawValue = computed(() => row.value?.[item.value.prop]);
 
 // 針對 week 欄位，做格式化輸出
-const formatted = computed<string | number | (string | number)[] | boolean | null>(() => {
-  if (item.value.prop !== "week") {
-    return value.value;
+const formatted = computed(() => {
+  // 處理 week 邏輯
+  if (item.value.prop === "week") {
+    if (row.value.schedule_type === "once") return "單次";
+    const wks: number[] = Array.isArray(row.value.week) ? row.value.week : [];
+    const weekdays = [1, 2, 3, 4, 5];
+
+    if (wks.length === 5 && weekdays.every((d) => wks.includes(d))) return "平日";
+    if (wks.length === 2 && wks.includes(6) && wks.includes(7)) return "假日";
+
+    // 返回陣列，並確保沒有 undefined
+    return wks.map((d) => WEEK_LABEL[d]).filter((n): n is string => !!n);
   }
 
-  if (row.value.schedule_type === "once") {
-    return "單次";
-  }
-  const weekdays = [1, 2, 3, 4, 5];
-
-  const wks: number[] = Array.isArray(row.value.week) ? row.value.week : [];
-
-  if (wks.length === weekdays.length && weekdays.every((d) => wks.includes(d))) {
-    return "平日";
-  }
-
-  if (wks)
-    if (wks.length === 2 && wks.includes(6) && wks.includes(7)) {
-      return "假日";
-    }
-  // 其他 → 依 WEEK_LABEL 映射
-  return wks.map((d) => WEEK_LABEL[d]).filter(Boolean);
+  return rawValue.value ?? "- -";
 });
 </script>
 
@@ -73,7 +54,11 @@ const formatted = computed<string | number | (string | number)[] | boolean | nul
     />
 
     <!-- switch 型： SwitchCell -->
-    <SwitchCell v-else-if="item.type === 'switch'" v-model="value" />
+    <SwitchCell
+      v-else-if="item.type === 'switch'"
+      :modelValue="!!rawValue"
+      @update:modelValue="(val) => switchCallback?.({ row: row, value: val })"
+    />
 
     <!-- 布林型： BooleanCell -->
     <DefaultCell

@@ -7,16 +7,13 @@ const MAX_CHINESE_LENGTH = MAX_WEIGHTED_LENGTH / 2;
  * 計算字串的加權長度（中文佔 2，英文/數字/符號佔 1）
  */
 function calculateWeightedLength(str: string): number {
-  if (!str) {
-    return 0;
-  }
+  if (!str) return 0;
+
   let length = 0;
-  // 正則表達式匹配東亞文字符 (中日韓文字及全形符號)
   const cjkRegex = /[\u4e00-\u9fa5\uac00-\ud7ff\uff00-\uffef]/;
 
-  for (let i = 0; i < str.length; i++) {
-    const char = str[i];
-    if (char.match(cjkRegex)) {
+  for (const char of str) {
+    if (cjkRegex.test(char)) {
       length += 2;
     } else {
       length += 1;
@@ -31,7 +28,7 @@ function calculateWeightedLength(str: string): number {
  */
 export function useValidationRules() {
   // 自定義驗證器：驗證加權長度
-  const validateNameLength = (rule: any, value: string, callback: (error?: Error) => void) => {
+  const validateNameLength = (_rule: any, value: string, callback: (error?: Error) => void) => {
     if (!value) {
       callback();
       return;

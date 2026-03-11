@@ -62,23 +62,9 @@ const tableRef = ref();
 const hiddenColumn = ref(false);
 const windowWidth = ref(window.innerWidth);
 
-// 計算每列唯一 key
-const computeRowKey = (row: any) => {
-  if (typeof rowKey.value === "function") {
-    return rowKey.value(row);
-  } else {
-    return row[rowKey.value as string];
-  }
-};
-
 const openEditDialog = (row: any) => {
   currentRow.value = row;
   isDialogVisible.value = true;
-};
-
-// 彈窗內提交
-const onDialogSubmit = (updatedData: any) => {
-  isDialogVisible.value = false;
 };
 
 // 視窗寬度變化
@@ -109,8 +95,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <el-table ref="tableRef" :data="filterTableData" v-if="isShowTable" :row-key="computeRowKey">
-    {{ filterTableData }}
+  <el-table ref="tableRef" :data="filterTableData" v-if="isShowTable" :row-key="rowKey">
     <el-table-column
       v-for="item in rowHeadItems"
       :key="item.prop"

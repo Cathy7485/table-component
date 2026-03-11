@@ -7,9 +7,8 @@ const props = withDefaults(
     id: string;
     time: string | null;
     placeholder?: string;
-    hasDeleteBtn?: boolean;
   }>(),
-  { time: null, placeholder: "選擇時間", hasDeleteBtn: false },
+  { time: null, placeholder: "選擇時間" },
 );
 
 // 定義 emits
@@ -17,11 +16,6 @@ const emit = defineEmits<{
   (event: "time", newTime: string | null): void;
   (event: "delete", id: string): void;
 }>();
-
-// 傳遞給父元件，要刪除的ID
-const handleDelete = (id) => {
-  emit("delete", id);
-};
 
 // 本地時間的響應式，支持字符串或 null
 const localTime = ref<string | null>(props.time);
@@ -63,8 +57,5 @@ onMounted(() => {
         @change="handleTimeChange"
       />
     </el-config-provider>
-    <div class="delete-input-btn" v-if="hasDeleteBtn" @click="handleDelete(localTime)">
-      <IconDelete />
-    </div>
   </div>
 </template>

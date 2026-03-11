@@ -8,29 +8,24 @@ const props = defineProps<{
 }>();
 
 // 計算要顯示的文字
-const displayText = computed((): string => {
-  switch (props.value) {
-    case "once":
-      return "單次";
-    case "cycle":
-      return "循環";
-    case null:
-    case undefined:
-      return "- -";
-
-    default:
-      const key = String(props.value);
-      return props.mapping?.[key] ?? key;
-  }
+const displayText = computed(() => {
+  if (props.value === null || props.value === undefined) return "- -";
+  const key = String(props.value);
+  // 優先看 mapping 表，沒有就顯示原值
+  return props.mapping?.[key] ?? key;
 });
 
 // 動態 style
 const cellStyle = computed(() => {
   const key = props.value != null ? String(props.value) : "";
   return {
-    backgroundColor: props.bgColor?.[key] ?? "",
-    borderColor: props.borderColor?.[key] ?? "",
-    color: props.borderColor?.[key] ?? "",
+    backgroundColor:
+      typeof props.bgColor === "object" ? (props.bgColor?.[key] ?? "") : (props.bgColor ?? ""),
+    borderColor:
+      typeof props.borderColor === "object"
+        ? (props.borderColor?.[key] ?? "")
+        : (props.borderColor ?? ""),
+    color: typeof props.textColor === "object" ? (props.textColor?.[key] ?? "") : "",
   };
 });
 

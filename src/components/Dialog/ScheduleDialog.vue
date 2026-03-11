@@ -58,10 +58,10 @@ const dayLabel = computed(() => {
       .sort((x, y) => x - y)
       .every((v, i) => v === b.slice().sort((x, y) => x - y)[i]);
 
-  if (sortArr(formData.week, [1, 2, 3, 4, 5])) {
+  if (sortArr(formData.week as number[], [1, 2, 3, 4, 5])) {
     return "平日";
   }
-  if (sortArr(formData.week, [6, 7])) {
+  if (sortArr(formData.week as number[], [6, 7])) {
     return "假日";
   }
 });
@@ -73,13 +73,13 @@ const selectWeekDays = (days: number[]) => {
 // -----------------------------------------------
 
 // 接收DateTimePicker/TimePicker元件 - 開始日期
-const handleBootTime = (val: string) => {
-  formData.boot_time = val;
+const handleBootTime = (val: string | null) => {
+  formData.boot_time = val || "";
 };
 
 // 接收DateTimePick/TimePicker元件 - 結束日期
-const handleStopTime = (val: string) => {
-  formData.stop_time = val;
+const handleStopTime = (val: string | null) => {
+  formData.stop_time = val || "";
 };
 // --------------------------------------------------
 // 開始結束時間欄位驗證
@@ -87,7 +87,7 @@ const handleStopTime = (val: string) => {
 const todayStart = new Date();
 todayStart.setHours(0, 0, 0, 0);
 
-const validateBootTime: FormItemRule["validator"] = (_, value, callback) => {
+const validateBootTime: FormItemRule["validator"] = (_rule: any, value, callback) => {
   if (!value) {
     return callback(new Error("請選擇開始時間"));
   }
@@ -115,7 +115,7 @@ const validateBootTime: FormItemRule["validator"] = (_, value, callback) => {
   callback();
 };
 
-const validateStopTime: FormItemRule["validator"] = (_, value, callback) => {
+const validateStopTime: FormItemRule["validator"] = (_rule: any, value, callback) => {
   if (!value) {
     return callback(new Error("請選擇結束時間"));
   }
@@ -124,19 +124,18 @@ const validateStopTime: FormItemRule["validator"] = (_, value, callback) => {
 
 // 合併規則
 const mergedRules = computed<Record<string, FormItemRule[]>>(() => {
-  const rules: Record<string, FormItemRule[]> = {};
-
-  Object.entries(SCHEDULE_RULES).forEach(([key, arr]) => {
-    rules[key] = [...arr];
-  });
+  // 使用類型斷言確保初始物件符合結構
+  const rules = { ...SCHEDULE_RULES } as Record<string, FormItemRule[]>;
 
   if (!rules.boot_time) rules.boot_time = [];
   if (!rules.stop_time) rules.stop_time = [];
 
+  // 確保推入的物件完全符合 FormItemRule 介面
   rules.boot_time.push({
-    validator: validateBootTime,
+    validator: validateBootTime, // 這裡的 validateBootTime 必須符合上面提到的參數規範
     trigger: "blur",
   });
+
   rules.stop_time.push({
     validator: validateStopTime,
     trigger: "blur",
