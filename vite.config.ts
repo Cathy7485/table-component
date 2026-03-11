@@ -13,7 +13,7 @@ export default defineConfig({
       dts: "src/auto-imports.ts",
     }),
   ],
-  base: process.env.NODE_ENV === "production" ? "/table-component/" : "/",
+  base: "/",
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
