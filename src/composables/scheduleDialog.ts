@@ -79,11 +79,7 @@ const useScheduleDialog = () => {
   };
 
   // 送出表單
-  const submitDialog = async (
-    formData: Partial<TSchedule>,
-    tab: number | null,
-    selectPoints: number[],
-  ) => {
+  const submitDialog = async (formData: Partial<TSchedule>, selectPoints: number[]) => {
     if (!formData) return;
 
     try {

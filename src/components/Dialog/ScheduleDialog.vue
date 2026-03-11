@@ -19,7 +19,7 @@ const { dialogTitle, dialogVisible, dialogType, dialogPoints } = toRefs(props);
 
 const emit = defineEmits<{
   (e: "close"): void;
-  (e: "submit", fromData: Partial<any>, tab: number | null, selectPoints: number[]): void;
+  (e: "submit", fromData: Partial<any>, selectPoints: number[]): void;
 }>();
 
 const closeDialog = () => {
@@ -230,7 +230,7 @@ const handleSubmit = () => {
       // 排序過後的點位
       const sortedPoints = [...selectPoints.value].sort((a, b) => a - b);
 
-      emit("submit", payload, selectedTab.value, sortedPoints);
+      emit("submit", payload, sortedPoints);
     }
   });
 };
