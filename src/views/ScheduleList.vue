@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import LoadingComponent from "@/components/LoadingComponent/index.vue";
-import useLoadingStore from "@/stores/loadingStore";
+import ScheduleDialog from "@/components/Dialog/ScheduleDialog.vue";
 
-import TableWrapper from "@/components/Table/TableWrapper.vue";
+import useLoadingStore from "@/stores/loadingStore";
 import useScheduleStore from "@/stores/scheduleStore";
 import useScheduleDialog from "@/composables/scheduleDialog.ts";
 
+import TableWrapper from "@/components/Table/TableWrapper.vue";
 import IconEdit from "@/components/icons/IconEdit.vue";
 import IconDelete from "@/components/icons/IconDelete.vue";
-import ScheduleDialog from "@/components/Dialog/ScheduleDialog.vue";
 import { SCHEDULE_RULES, SCHEDULES_TABLE_HEAD } from "@/constants/schedule";
 
 const scheduleStore = useScheduleStore();
@@ -18,41 +18,13 @@ const { fetchSchedules, fetchPointOptions } = scheduleStore;
 const loadingStore = useLoadingStore();
 const { isLoading } = storeToRefs(loadingStore);
 
-onMounted(async () => {
-  await fetchSchedules();
-  await fetchPointOptions();
-});
-
-// --------------------------
-
 const scheduleModal = useScheduleDialog();
 const { handleCallDialog, closeDialog, submitDialog } = scheduleModal;
 const { isDialogVisible, dialogState } = toRefs(scheduleModal);
+// --------------------------
 
 // table搜尋
 const searchKey = ref("");
-
-// 表格操作按鈕UI群組
-const editGroup = computed(() => {
-  const btnGroup: any[] = [];
-  btnGroup.push({
-    iconInfo: { component: IconEdit },
-    callback: (data: any) => {
-      handleCallDialog("modify", data);
-    },
-  });
-  btnGroup.push({
-    iconInfo: { component: IconDelete },
-    callback: (data: any) => {
-      handleCallDialog("delete", data);
-    },
-  });
-
-  return {
-    label: "狀態編輯",
-    btnGroup,
-  };
-});
 
 // 列表switch 開關
 const handleSwitchChange = async ({ row, value }: { row: any; value: boolean }) => {
@@ -72,6 +44,33 @@ const handleSwitchChange = async ({ row, value }: { row: any; value: boolean }) 
     console.warn("切換狀態失敗或取消", err);
   }
 };
+
+// 表格操作按鈕UI群組
+const editGroup = computed(() => {
+  const btnGroup: any[] = [];
+  btnGroup.push({
+    iconInfo: { component: IconEdit },
+    callback: (data: any) => {
+      handleCallDialog("modify", data);
+    },
+  });
+  btnGroup.push({
+    iconInfo: { component: IconDelete },
+    callback: (data: any) => {
+      handleCallDialog("delete", data);
+    },
+  });
+
+  return {
+    label: "狀態編輯", // 表頭顯示文字
+    btnGroup,
+  };
+});
+
+onMounted(async () => {
+  await fetchSchedules();
+  await fetchPointOptions();
+});
 </script>
 
 <template>
