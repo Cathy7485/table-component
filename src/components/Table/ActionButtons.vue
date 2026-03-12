@@ -27,7 +27,7 @@ const { row, btnGroup, dialogCallback } = props;
         {{ btn.name }}
       </el-button>
 
-      <!-- 普通按鈕（只有 alertOnly 才會被 disabled） -->
+      <!-- 普通按鈕 -->
       <el-button v-else link type="primary" size="small" @click="btn.callback && btn.callback(row)">
         <component :is="btn.iconInfo?.component" />
         {{ btn.name }}

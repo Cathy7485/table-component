@@ -98,3 +98,16 @@ export const WEEK_LABEL: Record<number, string> = {
   6: "週六",
   7: "週日",
 };
+
+// table元件中的標籤狀態CLASS對照表
+export const STATUS_CLASS_MAP: Record<string, string> = {
+  單次: "once",
+  循環: "cycle-default",
+  平日: "cycle-weekday",
+  假日: "cycle-holiday",
+  嚴重: "alert-label critical",
+  異常: "alert-label abnormal",
+  警戒: "alert-label warning",
+  斷線: "alert-label shutdown",
+  正常: "alert-label normal",
+};

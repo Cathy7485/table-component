@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { STATUS_CLASS_MAP } from "@/constants/schedule";
 const props = defineProps<{
   value: string | number | null | boolean;
   mapping?: Record<string, string>;
@@ -33,37 +34,13 @@ const cellStyle = computed(() => {
 const cellClass = computed(() => {
   const classes: string[] = [];
 
-  switch (displayText.value) {
-    case "單次":
-      classes.push("once");
-      break;
-    case "循環":
-      classes.push("cycle-default");
-      break;
-    case "平日":
-      classes.push("cycle-weekday");
-      break;
-    case "假日":
-      classes.push("cycle-holiday");
-      break;
-    case "嚴重":
-      classes.push("alert-label critical");
-      break;
-    case "異常":
-      classes.push("alert-label abnormal");
-      break;
-    case "警戒":
-      classes.push("alert-label warning");
-      break;
-    case "斷線":
-      classes.push("alert-label shutdown");
-      break;
-    case "正常":
-      classes.push("alert-label normal");
-      break;
-    default:
-      break;
+  // 使用映射表管理樣式
+  const mappingClass = STATUS_CLASS_MAP[displayText.value];
+
+  if (mappingClass) {
+    classes.push(mappingClass);
   }
+
   // 若 style 有背景顏色，加上 label-class
   if (
     cellStyle.value &&

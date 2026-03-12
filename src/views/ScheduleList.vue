@@ -32,7 +32,7 @@ const { isDialogVisible, dialogState } = toRefs(scheduleModal);
 // table搜尋
 const searchKey = ref("");
 
-// 表格操作按鈕群組
+// 表格操作按鈕UI群組
 const editGroup = computed(() => {
   const btnGroup: any[] = [];
   btnGroup.push({
