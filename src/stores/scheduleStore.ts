@@ -180,6 +180,12 @@ const useScheduleStore = defineStore("scheduleStore", () => {
     }
   };
 
+  // 清除資料
+  const resetData = () => {
+    schedules.value = [];
+    pointsList.value = [];
+  };
+
   return {
     pointsList,
     fetchPointOptions,
@@ -188,6 +194,7 @@ const useScheduleStore = defineStore("scheduleStore", () => {
     addSchedule,
     deleteSchedule,
     updateSchedule,
+    resetData,
   };
 });
 

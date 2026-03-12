@@ -15,6 +15,28 @@
   }
 }
 
+// 表頭最後一格置右
+.el-table__header tr {
+  th {
+    &:last-child {
+      text-align: right;
+    }
+  }
+}
+
+// 表格最後一格置右
+.el-table__body tr {
+  td {
+    &:last-child {
+      text-align: right !important;
+    }
+  }
+
+  .actions-buttons {
+    justify-content: flex-end;
+  }
+}
+
 .el-table thead {
   background: #4a4a4a;
   color: white !important;

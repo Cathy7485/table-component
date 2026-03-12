@@ -77,13 +77,11 @@ onMounted(async () => {
   <LoadingComponent v-if="isLoading" :isLoading="isLoading" />
 
   <div class="container layout" v-else>
-    <h2>排程管理系統</h2>
-
     <div class="actions-bar">
       <el-input v-model="searchKey" placeholder="搜尋排程名稱" clearable style="width: 200px" />
       <el-button
         type="primary"
-        class="button primary-button"
+        class="button outline-button"
         @click="handleCallDialog('create', null)"
         >新增排程</el-button
       >
